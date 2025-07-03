@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
 import useAuth from '../../Hook/useAuth';
+import useAxiosSecure from '../../Hook/useAxiosSecure';
+
 
 // tracing id ganetated function
 function generateTrackingId(region = "", district = "") {
@@ -20,6 +22,7 @@ function generateTrackingId(region = "", district = "") {
 
 const SendPercel = () => {
     const { user } = useAuth()
+    const axiosSecure=useAxiosSecure()
     const serviceCenters = useLoaderData()
 
     // States to hold selected region for Sender and Receiver
@@ -41,7 +44,6 @@ const SendPercel = () => {
         register,
         handleSubmit,
         watch,
-        control,
         reset,
         formState: { errors },
     } = useForm();
@@ -103,6 +105,7 @@ const SendPercel = () => {
             if (result.isConfirmed) {
                 const parcel = {
                     ...data,
+                    name:user?.displayName,
                     deliveryCost: totalCost,
                     payment_status: 'unpaid',
                     delivery_status: 'not_collected',
@@ -111,10 +114,16 @@ const SendPercel = () => {
                     tracking_Id: generateTrackingId()
                 };
                 console.log("Saving to DB:", parcel);
-
-                Swal.fire("Saved!", "Parcel info saved successfully.", "success");
-                reset(); // clear form
-            }
+                 axiosSecure.post('/parcels',parcel)
+                 .then(res=>{
+                    console.log(res.data)
+                    // TODO: redirect to the payment page
+                    if(res.data.insertedId){
+                   Swal.fire("Saved!", "Parcel info saved successfully.", "success");
+                    }
+                 })
+                 reset(); // clear form
+            } 
         });
     };
 
@@ -163,6 +172,7 @@ const SendPercel = () => {
                         <div>
                             <label className="label">Name</label>
                             <input
+                                defaultValue={user?.displayName}
                                 type="text"
                                 {...register("senderName", { required: true })}
                                 className="input input-bordered w-full"

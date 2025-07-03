@@ -1,12 +1,25 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SocalLogIn from '../SocalLogIn/SocalLogIn';
+import useAuth from '../../../Hook/useAuth';
 
 const LogIn = () => {
+    const { signIn } = useAuth()
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const location = useLocation()
+    const navigate = useNavigate()
+    const from = location?.state || '/';
     const onsubmit = data => {
         console.log(data)
+        signIn(data.email, data.password)
+            .then(result => {
+                console.log(result)
+                navigate(from)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
     return (
         <div>
@@ -40,7 +53,7 @@ const LogIn = () => {
                 </fieldset>
                 <p><small>Don't have an account <Link className='text-red-400 font-bold btn btn-link -ml-3 mb-1' to='/register'>Register</Link></small></p>
             </form>
-             <SocalLogIn></SocalLogIn>
+            <SocalLogIn></SocalLogIn>
         </div>
     );
 };
