@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router';
 import ProFirstLogo from '../Pages/Shared/Profirst/ProFirstLogo';
-import { FaBoxOpen, FaHistory, FaHome, FaSearchLocation, FaUserEdit } from 'react-icons/fa';
+import { FaBoxOpen, FaHistory, FaHome, FaSearchLocation, FaUserClock, FaUserEdit, FaUsers } from 'react-icons/fa';
 
 const DeahBoardLayout = () => {
   return (
@@ -39,7 +39,7 @@ const DeahBoardLayout = () => {
           {/* Sidebar content here */}
           <ProFirstLogo />
           <li>
-            <NavLink to='/' className="flex items-center gap-2">
+            <NavLink to='/dashboard' className="flex items-center gap-2">
               <FaHome /> Home
             </NavLink>
           </li>
@@ -61,6 +61,16 @@ const DeahBoardLayout = () => {
           <li>
             <NavLink to='/dashboard/profile' className="flex items-center gap-2">
               <FaUserEdit /> Update Profile
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/dashboard/activeRiders' className="flex items-center gap-2">
+              <FaUsers /> Active Riders
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/dashboard/pendingRiders' className="flex items-center gap-2">
+              <FaUserClock /> Pending Riders
             </NavLink>
           </li>
         </ul>

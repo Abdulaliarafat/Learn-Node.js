@@ -18,6 +18,7 @@ const Navber = () => {
      <li><NavLink to='/'>Home</NavLink></li>
      <li><NavLink to='/sendPercel'>Send a percel</NavLink></li>
      <li><NavLink to='/coverage'>Coverage</NavLink></li>
+     <li><NavLink to='/beARrider'>Be a rider</NavLink></li>
      {
         user &&
          <>

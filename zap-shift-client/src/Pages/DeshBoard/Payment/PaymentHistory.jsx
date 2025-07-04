@@ -16,7 +16,7 @@ const PaymentHistory = () => {
         }
     })
     if (isPending) {
-        return Loading
+        return <Loading></Loading>
     }
     return (
         <div className="mt-6 px-2 md:px-6">

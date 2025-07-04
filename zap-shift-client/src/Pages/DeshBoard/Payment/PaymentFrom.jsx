@@ -25,7 +25,7 @@ const PaymentFrom = () => {
         }
     })
     if (isPanding) {
-        return Loading
+        return <Loading></Loading>
     }
     console.log(parcelInfo)
 

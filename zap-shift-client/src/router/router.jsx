@@ -12,6 +12,8 @@ import MyParsels from "../Pages/DeshBoard/MyParcels/MyParsels";
 import Payment from "../Pages/DeshBoard/Payment/Payment";
 import PaymentHistory from "../Pages/DeshBoard/Payment/PaymentHistory";
 import TrackParcel from "../Pages/DeshBoard/TrackParcel/TrackParcel";
+import BeARider from "../Pages/DeshBoard/BeARider/BeARider";
+import PendingRiders from "../Pages/DeshBoard/PendingRiders/PendingRiders";
 
 export const router = createBrowserRouter([
   {
@@ -28,7 +30,14 @@ export const router = createBrowserRouter([
           path:'sendPercel',
           element:<PrivateRoutes><SendPercel></SendPercel></PrivateRoutes>,
           loader:()=>fetch('/warehouses.json')
-        }
+        },
+        {
+        path:'beARrider',
+       element:<PrivateRoutes>
+        <BeARider></BeARider>
+       </PrivateRoutes>,
+       loader:()=>fetch('/warehouses.json')
+      }
     ]
   },
   {
@@ -66,6 +75,10 @@ export const router = createBrowserRouter([
       {
         path:'trackingPakage',
         Component:TrackParcel
+      },
+      {
+        path:'pendingRiders',
+        Component:PendingRiders
       }
     ]
   }

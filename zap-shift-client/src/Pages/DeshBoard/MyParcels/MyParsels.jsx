@@ -2,22 +2,26 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAuth from '../../../Hook/useAuth';
 import useAxiosSecure from '../../../Hook/useAxiosSecure';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router';
+import Loading from '../../Shared/Loading';
 
 const MyParcels = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate=useNavigate()
 // get use tanstac qurey
-  const { data: parcels = [],refetch } = useQuery({
+  const {isPending, data: parcels = [],refetch } = useQuery({
     queryKey: ['my-parcel', user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/parcels?email=${user.email}`);
+      const res = await axiosSecure.get(`/parcels?email=${user?.email}`);
       return res.data;
     },
   });
+  if(isPending){
+    return <Loading></Loading>
+  }
 // handel view
   const handleView = (parcel) => {
     console.log('View:', parcel);

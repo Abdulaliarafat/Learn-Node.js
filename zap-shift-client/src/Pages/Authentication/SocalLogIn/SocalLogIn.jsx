@@ -1,16 +1,27 @@
 import React from 'react';
 import useAuth from '../../../Hook/useAuth';
 import { useLocation, useNavigate } from 'react-router';
+import useAxios from '../../../Hook/useAxios';
 
 const SocalLogIn = () => {
     const {signInWithGoogle}=useAuth()
     const location=useLocation()
     const navigate=useNavigate()
+    const axiosInstance=useAxios()
     const from=location?.state || '/';
     const handleGoogleLogIn=()=>{
         signInWithGoogle()
-        .then(result=>{
+        .then(async(result)=>{
+            const user=result.user
             console.log(result)
+            const userInfo={
+                   email:user.email,
+                   role:'user',    //default role
+                   create_at:new Date().toISOString(),
+                   last_log_in:new Date().toISOString()
+                 }
+                 const res= await axiosInstance.post('/users',userInfo)
+                 console.log(res.data)
             navigate(from)
         })
         .catch(error=>{
